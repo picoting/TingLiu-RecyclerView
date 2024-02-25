@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.criminalintent.databinding.ListItemCrimeBinding
+import com.bignerdranch.android.criminalintent.databinding.SeriousListItemCrimeBinding
 
 class CrimeHolder(
     private val binding: ListItemCrimeBinding
@@ -23,6 +24,24 @@ class CrimeHolder(
     }
 }
 
+class SeriousCrimeHolder(
+    private val binding: SeriousListItemCrimeBinding
+) : RecyclerView.ViewHolder(binding.root) {
+
+    fun bind(crime: Crime) {
+        binding.crimeTitle.text = crime.title
+        binding.crimeDate.text = crime.date.toString()
+        // Additional bindings specific to serious crimes can be done here
+
+        binding.root.setOnClickListener {
+            Toast.makeText(
+                binding.root.context,
+                "${crime.title} clicked! This is a serious crime.",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+}
 class CrimeListAdapter(
     private val crimes: List<Crime>
 ) : RecyclerView.Adapter<CrimeHolder>() {
