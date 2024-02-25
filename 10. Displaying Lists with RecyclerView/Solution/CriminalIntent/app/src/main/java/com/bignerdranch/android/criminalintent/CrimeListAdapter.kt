@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.criminalintent.databinding.ListItemCrimeBinding
-import com.bignerdranch.android.criminalintent.databinding.SeriousListItemCrimeBinding
 
 class CrimeHolder(
     private val binding: ListItemCrimeBinding
@@ -25,7 +24,7 @@ class CrimeHolder(
 }
 
 class SeriousCrimeHolder(
-    private val binding: SeriousListItemCrimeBinding
+    private val binding: ListItemCrimeBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(crime: Crime) {
