@@ -31,12 +31,11 @@ class SeriousCrimeHolder(
     fun bind(crime: Crime) {
         binding.crimeTitle.text = crime.title
         binding.crimeDate.text = crime.date.toString()
-        // Additional bindings specific to serious crimes can be done here
 
         binding.root.setOnClickListener {
             Toast.makeText(
                 binding.root.context,
-                "${crime.title} clicked! This is a serious crime.",
+                "${crime.title} clicked! SERIOUS....",
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -45,6 +44,15 @@ class SeriousCrimeHolder(
 class CrimeListAdapter(
     private val crimes: List<Crime>
 ) : RecyclerView.Adapter<CrimeHolder>() {
+
+    companion object {
+        private const val NORMAL_CRIMES= 1
+        private const val SERIOUS_CRIMES = 0
+    }
+    override fun getItemViewType(position: Int): Int {
+        val crime = crimes[position]
+        return if (crime.isSerious) SERIOUS_CRIMES else NORMAL_CRIMES
+    }
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
