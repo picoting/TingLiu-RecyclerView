@@ -43,7 +43,7 @@ class SeriousCrimeHolder(
 }
 class CrimeListAdapter(
     private val crimes: List<Crime>
-) : RecyclerView.Adapter<CrimeHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         private const val NORMAL_CRIMES= 1
@@ -56,15 +56,27 @@ class CrimeListAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): CrimeHolder {
+    ): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ListItemCrimeBinding.inflate(inflater, parent, false)
-        return CrimeHolder(binding)
+        return when (viewType) {
+            SERIOUS_CRIMES -> {
+                val seriousBinding = SeriousListItemCrimeBinding.inflate(inflater, parent, false)
+                SeriousCrimeHolder(seriousBinding)
+            }
+            else -> {
+                val binding = ListItemCrimeBinding.inflate(inflater, parent, false)
+                CrimeHolder(binding)
+            }
+        }
     }
 
-    override fun onBindViewHolder(holder: CrimeHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val crime = crimes[position]
-        holder.bind(crime)
+        when (holder) {
+            is CrimeHolder -> holder.bind(crime)
+            is SeriousCrimeHolder -> holder.bind(crime)
+            else -> throw IllegalArgumentException("Invalid view holder type")
+        }
     }
 
     override fun getItemCount() = crimes.size
