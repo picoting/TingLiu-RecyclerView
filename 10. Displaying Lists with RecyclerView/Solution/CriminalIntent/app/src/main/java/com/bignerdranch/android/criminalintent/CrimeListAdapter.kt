@@ -51,7 +51,7 @@ class CrimeListAdapter(
     }
     override fun getItemViewType(position: Int): Int {
         val crime = crimes[position]
-        return if (crime.isSerious) SERIOUS_CRIMES else NORMAL_CRIMES
+        return if (crime.requiresPolice) SERIOUS_CRIMES else NORMAL_CRIMES
     }
     override fun onCreateViewHolder(
         parent: ViewGroup,
